@@ -47,9 +47,6 @@
   # add ssh keys
   sshkey --username=vagrant ""
   
-  # ssh access during installation
-  sshpw --username=vagrant vagrant
-  
   selinux   --enforcing
   services  --enabled="auditd,firewalld,rsyslog"
   
