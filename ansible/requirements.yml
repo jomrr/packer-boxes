@@ -1,0 +1,9 @@
+# file: ansible/requirements.yml
+---
+collections:
+  - name: community.general
+
+# roles:
+#   - name: packer_provision
+#     src: https+git://github.com/jomrr/ansible-role-packer_provision.git
+#     version: main
