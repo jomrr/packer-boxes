@@ -8,3 +8,4 @@ iso_url         = "https://repo.almalinux.org/almalinux/9.4/isos/x86_64/AlmaLinu
 name            = "almalinux-9"
 templatefile    = "templates/almalinux.pkrtpl.hcl"
 version         = "9"
+vm_name         = "almalinux-9-box"

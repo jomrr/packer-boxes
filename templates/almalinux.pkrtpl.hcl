@@ -6,12 +6,12 @@ skipx
 firstboot   --disable
 reboot      --eject
 
-url         --url="https://mirror.jomrr.de/almalinux/9/BaseOS/x86_64/os"
+url         --url="https://ftp.halifax.rwth-aachen.de/almalinux/9/BaseOS/x86_64/os/"
 
-repo        --name="almalinux-base"      --baseurl="https://mirror.jomrr.de/almalinux/9/BaseOS/x86_64/os"
-repo        --name="almalinux-appstream" --baseurl="https://mirror.jomrr.de/almalinux/9/AppStream/x86_64/os"
-repo        --name="almalinux-extras"    --baseurl="https://mirror.jomrr.de/almalinux/9/extras/x86_64/os"
-repo        --name="almalinux-epel"      --baseurl="https://mirror.jomrr.de/epel/9/x86_64"
+repo        --name="almalinux-base"      --baseurl="https://ftp.halifax.rwth-aachen.de/almalinux/9/BaseOS/x86_64/os/"
+repo        --name="almalinux-appstream" --baseurl="https://ftp.halifax.rwth-aachen.de/almalinux/9/AppStream/x86_64/os/"
+repo        --name="almalinux-extras"    --baseurl="https://ftp.halifax.rwth-aachen.de/almalinux/9/extras/x86_64/os/"
+repo        --name="almalinux-epel"      --baseurl="https://ftp.halifax.rwth-aachen.de/fedora-epel/9/Everything/x86_64/"
 
 clearpart   --all --drives=vda --initlabel
 ignoredisk  --only-use=vda
@@ -32,14 +32,14 @@ logvol /home          --vgname=system --name=home  --fstype ext4  --size=2048  -
 logvol /opt           --vgname=system --name=opt   --fstype ext4  --size=2048  --fsoptions="noatime,nodev,nosuid"
 logvol /srv           --vgname=system --name=srv   --fstype ext4  --size=4096  --fsoptions="noatime,nodev,noexec,nosuid"
 logvol /var           --vgname=system --name=var   --fstype ext4  --size=8192  --fsoptions="noatime,nodev,nosuid"
-logvol /var/lib       --vgname=system --name=lib   --fstype ext4  --size=8192  --fsoptions="noatime,nodev,nosuid"
+logvol /var/lib       --vgname=system --name=lib   --fstype ext4  --size=8192  --fsoptions="noatime"
 logvol /var/log       --vgname=system --name=log   --fstype ext4  --size=4096  --fsoptions="noatime,nodev,noexec,nosuid,"
 logvol /var/log/audit --vgname=system --name=audit --fstype ext4  --size=4096  --fsoptions="noatime,nodev,noexec,nosuid,noatime"
 logvol /var/tmp       --vgname=system --name=tmp   --fstype ext4  --size=4096  --fsoptions="noatime,nodev,noexec,nosuid,noatime"
 logvol /var/www       --vgname=system --name=www   --fstype ext4  --size=4096  --fsoptions="noatime,nodev,noexec,nosuid,noatime"
 
 # network configuration
-network     --hostname=vagrant --noipv6 --bootproto=dhcp
+network     --hostname=${var.vm_name} --noipv6 --bootproto=dhcp
 
 # keyboard, language and timezone configuration
 keyboard    --vckeymap=de --xlayouts='de'
@@ -48,10 +48,11 @@ timezone    Europe/Berlin --utc
 timesource  --ntp-server=ntp.web.de
 
 # timesource  --ntp-server ntp3.fau.de
-user --name=vagrant --groups=wheel --password=vagrant --shell=/bin/bash
+user --name=${var.ssh_username} --groups=wheel --password=${var.ssh_password} --shell=/bin/bash
 
 # add ssh keys
-sshkey --username=vagrant ""
+sshkey --username=root "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIL/I6QZyVdbscx3sSidLnahUTfB2+93koZSWWpMsz0Ns jomr@PC2414"
+sshkey --username=${var.ssh_username} "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIL/I6QZyVdbscx3sSidLnahUTfB2+93koZSWWpMsz0Ns jomr@PC2414"
 
 selinux   --enforcing
 services  --enabled="auditd,firewalld,rsyslog"

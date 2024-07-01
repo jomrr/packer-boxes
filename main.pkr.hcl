@@ -86,6 +86,11 @@ variable "version" {
   default = "40"
 }
 
+variable "vm_name" {
+  type = string
+  default = "fedora-40-box"
+}
+
 source "qemu" "generic" {
   accelerator = "kvm"
   boot_command = var.boot_command
